@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+
 
 namespace Ejercicio1
 {
@@ -10,20 +12,28 @@ namespace Ejercicio1
     {
         //Next(1.10) devuelve numero entre 1-9
         static Random aleatorio = new Random(); //Se instancia solo 1 vez
-        static double SUELDOBASICO = 5000;
-        static double SueldoTotal = 0;
+        static decimal SUELDOBASICO = 5000;
+        static decimal SueldoTotal = 0;
+     
         static void Main(string[] args)
         {
+            Manejo_Archivo archivito = new Manejo_Archivo();
+            DateTime Nacimiento;
+            DateTime Ingreso;
+            Cargo Cargo;
+            EstadoCivil EstadoCivil;
+            Genero Genero;
+            decimal Sueldo;
             //CARGA EMPLEADOS
             List<Empleado> ListaEmpleados = new List<Empleado>();
             for (int i = 0; i < 5; i++)
             {
-                    DateTime Nacimiento = NacimientoAleatorio();
-                    DateTime Ingreso = IngresoAleatorio();
-                    Cargo Cargo = CargoAleatorio();
-                    EstadoCivil EstadoCivil = EstadoCivilAleatorio();
-                    Genero Genero = GeneroAleatorio();
-                    double Sueldo = CalcularSalario(Nacimiento, Ingreso, Cargo, EstadoCivil, Genero);
+                    Nacimiento = NacimientoAleatorio();
+                    Ingreso = IngresoAleatorio();
+                    Cargo = CargoAleatorio();
+                    EstadoCivil = EstadoCivilAleatorio();
+                    Genero = GeneroAleatorio();
+                    Sueldo = CalcularSalario(Nacimiento, Ingreso, Cargo, EstadoCivil, Genero);
                     ListaEmpleados.Add(new Empleado("Empleado:" + (i + 1).ToString(), " Apellido:" + (i + 1).ToString(), Nacimiento, Ingreso, Sueldo, Cargo, EstadoCivil, Genero));
             }
             //MUESTRA EMPLEADOS
@@ -38,8 +48,18 @@ namespace Ejercicio1
             {
                 SueldoTotal += empleado.Sueldo;
             }
-                Console.WriteLine($"El sueldo total de todos los empleados es {SueldoTotal}");
-                Console.ReadKey();
+            Console.WriteLine($"El sueldo total de todos los empleados es {SueldoTotal}");
+            archivito.leerArchivo(ListaEmpleados);
+
+            Console.WriteLine("La nueva lista de empleados es:");
+                        foreach (Empleado empleado in ListaEmpleados)
+            {
+                Console.WriteLine($"{empleado.Nombre} |{empleado.Apellido} | Nacimiento: {empleado.FechaNacimiento.ToString("dd/MM/yyyy")} | Ingreso: {empleado.FechaIngreso.ToString("dd/MM/yyyy")} | Cargo: {empleado.Cargo} | Estado Civil: {empleado.EstadoCivil} | Genero: {empleado.Genero} | Sueldo: {empleado.Sueldo}");
+            }
+            archivito.escribirArchivo(ListaEmpleados);
+            Console.ReadKey();
+            
+
             }
 
             //METODOS
@@ -109,10 +129,10 @@ namespace Ejercicio1
                 return aux;
             }
 
-            static double CalcularSalario(DateTime Nacimiento, DateTime Ingreso, Cargo cargo, EstadoCivil EstadoCivil, Genero Genero)
+            static decimal CalcularSalario(DateTime Nacimiento, DateTime Ingreso, Cargo cargo, EstadoCivil EstadoCivil, Genero Genero)
             {
             //int SUELDOBASICO = 5000;
-            double salario, adicional = 0;
+            decimal adicional = 0;
             TimeSpan aux1 = DateTime.Now.Subtract(Nacimiento);
             int edad = aux1.Days / 365;
             TimeSpan aux2 = DateTime.Now.Subtract(Ingreso);
@@ -120,15 +140,15 @@ namespace Ejercicio1
 
             if (antiguedad <= 20)
             {
-                adicional = SUELDOBASICO * (0.02) * antiguedad;
+                adicional = SUELDOBASICO * ((decimal)0.02) * antiguedad;
             }
             else
             {
-                adicional = SUELDOBASICO * 0.45;
+                adicional = SUELDOBASICO * (decimal)0.45;
             }
             if ((cargo == Cargo.Administrativo) | (cargo == Cargo.Especialista))
             {
-                adicional *= 1.5;
+                adicional *= (decimal)1.5;
             }
             if (EstadoCivil == EstadoCivil.Casado)
             {

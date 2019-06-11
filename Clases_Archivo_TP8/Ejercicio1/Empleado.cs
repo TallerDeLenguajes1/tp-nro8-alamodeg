@@ -11,19 +11,116 @@ namespace Ejercicio1
     public enum EstadoCivil { Soltero, Casado };
     public enum Genero { Masculino, Femenino };
 
-    class Empleado
+    public class Empleado
     {
-            public string Nombre;
-            public string Apellido;
-            public DateTime FechaNacimiento;
-            public DateTime FechaIngreso;
-            public Cargo Cargo;
-            public EstadoCivil EstadoCivil;
-            public Genero Genero;
-            public double Sueldo;
+        private string nombre;
+        private string apellido;
+        private DateTime fechaNacimiento;
+        private DateTime fechaIngreso;
+        private Cargo cargo;
+        private EstadoCivil estadoCivil;
+        private Genero genero;
+        private decimal sueldo;
 
-            //CONSTRUCTOR
-            public Empleado(string _nombre, string _apellido, DateTime _fechaNacimiento, DateTime _fechaIngreso, double _sueldo, Cargo _cargo, EstadoCivil _estadoCivil, Genero _genero)
+        public string Nombre
+        {
+            get {return nombre;}
+            set {nombre = value;}
+        }
+
+        public string Apellido
+        {
+            get
+            {
+                return apellido;
+            }
+
+            set
+            {
+                apellido = value;
+            }
+        }
+
+        public DateTime FechaNacimiento
+        {
+            get
+            {
+                return fechaNacimiento;
+            }
+
+            set
+            {
+                fechaNacimiento = value;
+            }
+        }
+
+        public DateTime FechaIngreso
+        {
+            get
+            {
+                return fechaIngreso;
+            }
+
+            set
+            {
+                fechaIngreso = value;
+            }
+        }
+
+        public Cargo Cargo
+        {
+            get
+            {
+                return cargo;
+            }
+
+            set
+            {
+                cargo = value;
+            }
+        }
+
+        public EstadoCivil EstadoCivil
+        {
+            get
+            {
+                return estadoCivil;
+            }
+
+            set
+            {
+                estadoCivil = value;
+            }
+        }
+
+        public Genero Genero
+        {
+            get
+            {
+                return genero;
+            }
+
+            set
+            {
+                genero = value;
+            }
+        }
+
+        public decimal Sueldo
+        {
+            get
+            {
+                return sueldo;
+            }
+
+            set
+            {
+                sueldo = value;
+            }
+        }
+
+        //CONSTRUCTOR
+        public Empleado(string _nombre, string _apellido, DateTime _fechaNacimiento, DateTime _fechaIngreso, decimal _sueldo, Cargo _cargo, EstadoCivil _estadoCivil, Genero _genero)
             {
                 this.Nombre = _nombre;
                 this.Apellido = _apellido;
